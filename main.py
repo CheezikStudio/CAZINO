@@ -84,7 +84,25 @@ def main():
 Статистика бота:\nВсего выведено:{Alltake}\nЗаработано:{Allprofit}\nВсего игроков:{Allplayers}\nПоследний вывод:{Lastdeposit}
 
                         ''',  reply_markup=markup, parse_mode='HTML')
-
+                if call.data == "take":
+                    markup = types.InlineKeyboardMarkup(row_width = 1)
+                    btn1 = types.InlineKeyboardMarkup(text="Qiwi(Автоматический перевод)", callback_data=f"Qiwi")
+                    btn2 = types.InlineKeyboardMarkup(text="Сбер(Полуавтоматический перевод)", callback_data=f"Sber")
+                    markup.add(btn1, btn2)
+                    file = open("dev.jpg", "rb")
+                    bot.send_photo(idtg, file, f'''
+Выбери способ вывода:
+                        ''',  reply_markup=markup, parse_mode='HTML')
+                if call.data == "deposit":
+                    markup = types.InlineKeyboardMarkup(row_width = 1)
+                    btn1 = types.InlineKeyboardMarkup(text="Qiwi(Автоматический перевод)", callback_data=f"Qiwi")
+                    btn2 = types.InlineKeyboardMarkup(text="Сбер(Полуавтоматический перевод)", callback_data=f"Sber")
+                    btn3 = types.InlineKeyboardMarkup(text="Юмоней(Автоматический перевод)", callback_data=f"Umoney")
+                    markup.add(btn1, btn2, btn3)
+                    file = open("dev.jpg", "rb")
+                    bot.send_photo(idtg, file, f'''
+Выбери способ вывода:
+                        ''',  reply_markup=markup, parse_mode='HTML')
                 if call.data == "callback":
                     bot.delete_message(idtg, call.message.message_id)
                     markup = types.InlineKeyboardMarkup(row_width = 1)
