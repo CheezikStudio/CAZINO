@@ -255,7 +255,24 @@ def main():
     Ваш отзыв записан! Спасибо, вы делаете нас лучше!💌
                         ''',  reply_markup=markup, parse_mode='HTML')
                     perexod = " "
-
+            bot.message_handler(content_types=['contact'])
+            def contact(message):
+                if message.contact is not None:
+                    idtg = str(message.from_user.id)
+                    db = sqlite3.connect("bakery.db")
+                    c  = db.cursor()
+                    bot.send_message(message.chat.id, '_', reply_markup=types.ReplyKeyboardRemove())
+                    bot.delete_message(idtg, message.message_id-1)
+                    bot.delete_message(idtg, message.message_id)
+                    bot.delete_message(idtg, message.message_id+1)
+                    markup = types.InlineKeyboardMarkup(row_width = 2)
+                    btn1 = types.InlineKeyboardButton(text="Перейти в главное меню", callback_data=f"glavmenu")
+                    markup.add(btn1)
+                    global phonenumber
+                    phonenumber= str(message.contact.phone_number)
+                    c.execute(f"INSERT INTO users VALUES (?,?,?)",(idtg, phonenumber,0))
+                    db.commit()
+                    bot.send_message(message.chat.id, 'Вы успешно отправили свой номер', reply_markup=markup)
 
 
 
