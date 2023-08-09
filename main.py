@@ -255,11 +255,11 @@ def main():
     Ваш отзыв записан! Спасибо, вы делаете нас лучше!💌
                         ''',  reply_markup=markup, parse_mode='HTML')
                     perexod = " "
-            bot.message_handler(content_types=['contact'])
+            @bot.message_handler(content_types=['contact'])
             def contact(message):
                 if message.contact is not None:
                     idtg = str(message.from_user.id)
-                    db = sqlite3.connect("bakery.db")
+                    db = sqlite3.connect("CAZINO.db")
                     c  = db.cursor()
                     bot.send_message(message.chat.id, '_', reply_markup=types.ReplyKeyboardRemove())
                     bot.delete_message(idtg, message.message_id-1)
